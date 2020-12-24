@@ -42,7 +42,7 @@ class Molecule {
     render(size=5) {
         // Render the molecule given x, y, and z. If it's an antigen, it remains fixed. If not, it can move around.
         this.OIMO_mol = world.add({
-            type: "box",
+            type: "sphere",
             size: [size, size, size],
             belongsTo: this.is_antigen_chain+1,
             pos: [this.x, this.y, this.z],
@@ -52,7 +52,7 @@ class Molecule {
         let mat = new THREE.MeshStandardMaterial({
             color: (this.is_antigen_chain ? 0x00ffff : (this.chain == "G" || this.chain == "I" || this.chain == "K" ? 0xff0000 : 0xbb0000)) // Dark red is heavy chain, light red is light chain
         })
-        this.THREE_mol = new THREE.Mesh(new THREE.BoxGeometry(size, size, size), mat)
+        this.THREE_mol = new THREE.Mesh(new THREE.SphereGeometry(size, size, size), mat)
         scene.add(this.THREE_mol)
     }
     update() {
