@@ -9,6 +9,13 @@
                 top: 0;
                 left: 0;
             }
+            input {
+                position: fixed;
+                top: 5px;
+                left: 5px;
+                z-index: 2;
+                color: white;
+            }
         </style>
         <script src="three.min.js"></script>
         <script src="OrbitControls.js"></script>
@@ -16,6 +23,7 @@
         
     </head>
     <body>
+        <input type="file" id="pdb" accept="application/x-aportisdoc"> <!--Only accepts .pdb files-->
         <script src="source.js"></script>
     </body>
 </html>
