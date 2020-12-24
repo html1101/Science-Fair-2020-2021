@@ -15,7 +15,7 @@ document.body.appendChild(renderer.domElement)
 let world = new OIMO.World({
     info: false,
     broadphase: 2,
-    gravity: [0, -9.81, 0]
+    gravity: [0, 0, 0]
 })
 
 // Orbit controls; these let the user pan/move in the 3D environment.
@@ -25,8 +25,8 @@ const controls = new THREE.OrbitControls(camera, renderer.domElement)
 // Creating a class for which we can handle our molecules
 antigen_chains = ["A", "C", "E", "B", "D", "F"]
 class Molecule {
+    /** Given a line from the .pdb file, construct the corresponding molecule. */
     constructor(line) {
-        // Given a line from the .pdb file, construct the corresponding molecule.
         // Positions 30-39: x value
         // Positions 39-46: y value
         // Positions 46-55: z value
@@ -39,31 +39,56 @@ class Molecule {
         this.chain = line.slice(21, 22)
         this.is_antigen_chain = antigen_chains.includes(this.chain)
     }
+    /** Render the molecule given x, y, and z. If it's an antigen, it remains fixed. If not, it can move around. */
     render(size=5) {
-        // Render the molecule given x, y, and z. If it's an antigen, it remains fixed. If not, it can move around.
         this.OIMO_mol = world.add({
             type: "sphere",
             size: [size, size, size],
-            belongsTo: this.is_antigen_chain+1,
+            belongsTo: 1 << this.is_antigen_chain,
             pos: [this.x, this.y, this.z],
             move: !this.is_antigen_chain,
-            collidesWith: []
+            collidesWith: 0xffffff & ~(1 << this.is_antigen_chain)
         })
         let mat = new THREE.MeshStandardMaterial({
             color: (this.is_antigen_chain ? 0x00ffff : (this.chain == "G" || this.chain == "I" || this.chain == "K" ? 0xff0000 : 0xbb0000)) // Dark red is heavy chain, light red is light chain
         })
-        this.THREE_mol = new THREE.Mesh(new THREE.SphereGeometry(size, size, size), mat)
+        this.THREE_mol = new THREE.Mesh(new THREE.SphereGeometry(size, 20), mat)
         scene.add(this.THREE_mol)
     }
+    /**Sync the molecule's OIMO and THREE.js layers. */
     update() {
-        // Sync the molecule's OIMO and THREE.js layers.
+        /**
+         * How copying pos and quat work:
+         * box[three.js version].position.copy(box[OIMO version].getPosition())
+         * box[three.js version].quaternion.copy(box[OIMO version].getQuaternion())
+         */
         this.THREE_mol.position.copy(this.OIMO_mol.getPosition())
         this.THREE_mol.quaternion.copy(this.OIMO_mol.getQuaternion())
+    }
+    translate(x, y, z) {
+        // Translates the molecule; we will use this so that we can separate the antigen and antibodies.
+        // This needs to be performed before rendering.
+        this.x += x
+        this.y += y
+        this.z += z
+    }
+    /**
+     * Given the position to which the molecule will be pulled, applyImpulse using OIMO.
+     * @constructor
+     * @param {Array.<number>} pos - The position the molecule will be drawn to.
+     */
+    applyForce(pos) {
+        let center = new THREE.Vector3(-200, -200, -200), // Converting to 3D THREE Vector, which is compatible with OIMO.
+            force = this.THREE_mol.position.clone().negate().normalize().multiplyScalar(70) // The force it's going to be pulled towards that point
+        // console.log(force)
+        this.OIMO_mol.applyImpulse(center, force)
     }
 }
 
 // Now that we've created the framework with which to initialize the molecules, we can load the full file.
-molecules = [] // List of molecules
+molecules = [], // List of molecules
+avgPoint = [0, 0, 0], // Average point for where we're going to place the magnet. This is purely for testing right now.
+num_antigen = 0 // Number of molecules in the dengue virus
 
 // Now we need to upload the file. This is going to require some work from the HTML.
 file_load = document.getElementById("pdb")
@@ -75,11 +100,22 @@ file_load.addEventListener("change", () => {
         }) // The (async) result of loading the file, filtered by atom(takes out header, remark lines, etc).
         for(let i = 0; i < val.length; i++) {
             molecules.push(new Molecule(val[i]))
+            if(!molecules[molecules.length - 1].is_antigen_chain) {
+                // Translate the molecule away from the big antigen
+                molecules[molecules.length - 1].translate(-50, -50, -50)
+            } else {
+                // Change average point
+                avgPoint[0] += molecules[molecules.length - 1].x
+                avgPoint[1] += molecules[molecules.length - 1].y
+                avgPoint[2] += molecules[molecules.length - 1].z
+                num_antigen++
+            }
+            // Have to render after translation because we're modifying this.x and this.y
             molecules[molecules.length - 1].render()
             molecules[molecules.length - 1].update()
             console.log(molecules[molecules.length - 1].THREE_mol.position)
         }
-        console.log(val.length)
+        avgPoint = avgPoint.map(x => {return x / num_antigen}) // Divide the sum of all the points by the number of points we have(AKA average)
     }
     fr.readAsText(file_load.files[0])
 })
@@ -95,20 +131,18 @@ let center, ang = 0;
 const animate = () => {
     requestAnimationFrame(animate)
     renderer.render(scene, camera)
-    center = new THREE.Vector3()
-    /**
-     * How copying pos and quat work:
-     * box[three.js version].position.copy(box[OIMO version].getPosition())
-     * box[three.js version].quaternion.copy(box[OIMO version].getQuaternion())
-     */
-    // sph1.setRotation(new THREE.Vector3(ang, ang, 0))
-    // ang += 0.5
+    // Center will be our first attempt to applyImpulse.
     // force = mesh1.position.clone().negate().normalize().multiplyScalar(0.2)
-    // sph1.applyImpulse(center, force)
-    // console.log(mesh.position)
-    // console.log(sph1, force, mesh1.position)
-    // console.log(test_mol.OIMO_mol.position)
-    // test_mol.update()
+    // Update antibody molecules
+    for(let i = 0; i < molecules.length; i++) {
+        if(!molecules[i].is_antigen_chain) {
+            // Update
+            molecules[i].applyForce([0, 0, 0])
+            molecules[i].update()
+        }
+    }
+    center = new THREE.Vector3()
+
     world.step()
 }
 animate()
