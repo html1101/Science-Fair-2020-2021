@@ -23,7 +23,7 @@ const controls = new THREE.OrbitControls(camera, renderer.domElement)
 // controls.enableKeys = false
 
 // Creating a class for which we can handle our molecules
-antigen_chains = ["A", "C", "E", "B", "D", "F"]
+antigen_chains = [["A"], ["C"], ["E"], ["B"], ["D"], ["F"]]
 class Molecule {
     /** Given a line from the .pdb file, construct the corresponding molecule. */
     constructor(line, n) {
@@ -34,6 +34,7 @@ class Molecule {
         this.x = Number(line.slice(30, 38))
         this.y = Number(line.slice(38, 46))
         this.z = Number(line.slice(46, 55))
+        this.vecPos = new THREE.Vector3(this.x, this.y, this.z)
         this.name = (this.is_antigen_chain ? "antigen_" : "antibody_") + n // Will use for name
         // Is it an antigen?
         // If it is, it'll be part of chains A, C, E, B, D, or F. At least for this molecule.
@@ -93,10 +94,28 @@ avgPoint = [0, 0, 0], // Average point for where we're going to place the magnet
 num_antigen = 0, // Number of molecules in the dengue virus
 hinges = [] // This is probably not going to work. Just humor me a little here.
 
+const runAfter = () => {
+    // This is most definitely NOT efficient; we need to work with this for now.
+    for(let i = 0; i < molecules.length; i++) {
+        for(let ii = 0; ii < molecules.length && i !== ii && molecules[i].chain == molecules[ii].chain && !molecules[i].is_antigen_chain; ii++) {
+            distance = Math.sqrt(Math.pow(molecules[i].x - molecules[ii].x, 2) + Math.pow(molecules[i].y - molecules[ii].y, 2) + Math.pow(molecules[i].z - molecules[ii].z, 2))
+            world.add({
+                type: "jointDistance",
+                body1: molecules[i].name,
+                body2: molecules[ii].name,
+                min: distance,
+                max: distance+0.01,
+                pos1: molecules[i].vecPos.normalize().toArray(),
+                pos2: molecules[ii].vecPos.normalize().toArray()
+            })
+        }
+    }
+}
+
 // Now we need to upload the file. This is going to require some work from the HTML.
 file_load = document.getElementById("pdb")
+let fr = new FileReader()
 file_load.addEventListener("change", () => {
-    let fr = new FileReader()
     fr.onload = () => {
         let val = fr.result.split("\n").filter(x => {
             return x.slice(0, 4) == "ATOM"
@@ -107,30 +126,22 @@ file_load.addEventListener("change", () => {
                 // Translate the molecule away from the big antigen
                 molecules[molecules.length - 1].translate(-50, -50, -50)
                 // Because it's a part of the antibody, add it to the big hinge list.
-                if(i > 0) {
-                    // We can look back at the past point
-                    // If it's part of the same chain, add a hinge to it
-                    if(molecules[molecules.length - 2].chain == molecules[molecules.length - 1].chain) {
-                        world.add({
-                            type: "jointHinge",
-                            body1: molecules[molecules.length - 2].name,
-                            body2: molecules[molecules.length - 1].name
-                        })
-                    }
-                }
+                molecules[molecules.length - 1].render()
+                molecules[molecules.length - 1].update()
             } else {
                 // Change average point
                 avgPoint[0] += molecules[molecules.length - 1].x
                 avgPoint[1] += molecules[molecules.length - 1].y
                 avgPoint[2] += molecules[molecules.length - 1].z
                 num_antigen++
+                molecules[molecules.length - 1].render()
+                molecules[molecules.length - 1].update()
             }
             // Have to render after translation because we're modifying this.x and this.y
-            molecules[molecules.length - 1].render()
-            molecules[molecules.length - 1].update()
             console.log(molecules[molecules.length - 1].THREE_mol.position)
         }
         avgPoint = avgPoint.map(x => {return x / num_antigen}) // Divide the sum of all the points by the number of points we have(AKA average)
+        runAfter()
     }
     fr.readAsText(file_load.files[0])
 })
@@ -140,6 +151,23 @@ const ambient_light = new THREE.AmbientLight(0xffffff, 0.3),
 point_light = new THREE.DirectionalLight(0xffffff, 0.5)
 scene.add(ambient_light)
 scene.add(point_light)
+// if(i > 0) {
+//         // We can look back at the past point
+//         // If it's part of the same chain, add a hinge to it
+//         if(molecules[molecules.length - 2].chain == molecules[molecules.length - 1].chain) {
+//             // Calc distance between the two
+//             distance = Math.sqrt(Math.pow(molecules[molecules.length - 1].x - molecules[molecules.length - 2].x, 2) + Math.pow(molecules[molecules.length - 1].y - molecules[molecules.length - 2].y, 2) + Math.pow(molecules[molecules.length - 1].z - molecules[molecules.length - 2].z, 2))
+//             world.add({
+//                 type: "jointDistance",
+//                 body1: molecules[molecules.length - 2].name,
+//                 body2: molecules[molecules.length - 1].name,
+//                 min: distance,
+//                 max: distance+0.01,
+//                 pos1: molecules[molecules.length - 2].vecPos.normalize().toArray(),
+//                 pos2: molecules[molecules.length - 1].vecPos.normalize().toArray()
+//             })
+//         }
+//     }
 
 // Making the scene ALIVE with animation
 let center, ang = 0;
