@@ -23,7 +23,7 @@ const controls = new THREE.OrbitControls(camera, renderer.domElement)
 // controls.enableKeys = false
 
 // Creating a class for which we can handle our molecules
-antigen_chains = [["A"], ["C"], ["E"], ["B"], ["D"], ["F"]]
+antigen_chains = ["A", "C", "E", "B", "D", "F"]
 class Molecule {
     /** Given a line from the .pdb file, construct the corresponding molecule. */
     constructor(line, n) {
@@ -97,17 +97,20 @@ hinges = [] // This is probably not going to work. Just humor me a little here.
 const runAfter = () => {
     // This is most definitely NOT efficient; we need to work with this for now.
     for(let i = 0; i < molecules.length; i++) {
-        for(let ii = 0; ii < molecules.length && i !== ii && molecules[i].chain == molecules[ii].chain && !molecules[i].is_antigen_chain; ii++) {
-            distance = Math.sqrt(Math.pow(molecules[i].x - molecules[ii].x, 2) + Math.pow(molecules[i].y - molecules[ii].y, 2) + Math.pow(molecules[i].z - molecules[ii].z, 2))
-            world.add({
-                type: "jointDistance",
-                body1: molecules[i].name,
-                body2: molecules[ii].name,
-                min: distance,
-                max: distance+0.01,
-                pos1: molecules[i].vecPos.normalize().toArray(),
-                pos2: molecules[ii].vecPos.normalize().toArray()
-            })
+        for(let ii = 0; ii < molecules.length; ii++) {
+            if(i !== ii && molecules[i].chain == molecules[ii].chain && !molecules[i].is_antigen_chain) {
+                distance = Math.sqrt(Math.pow(molecules[i].x - molecules[ii].x, 2) + Math.pow(molecules[i].y - molecules[ii].y, 2) + Math.pow(molecules[i].z - molecules[ii].z, 2))
+                world.add({
+                    type: "jointDistance",
+                    body1: molecules[i].name,
+                    body2: molecules[ii].name,
+                    min: distance,
+                    max: distance+0.1,
+                    pos1: molecules[i].vecPos.normalize().toArray(),
+                    pos2: molecules[ii].vecPos.normalize().toArray(),
+                    collision: true
+                })
+            }
         }
     }
 }
