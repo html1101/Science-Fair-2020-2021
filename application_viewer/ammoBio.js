@@ -11,7 +11,7 @@
  * Create a genetic algorithm
 */
 
-let physicsWorld, scene, camera, renderer;
+let physicsWorld, scene, camera, renderer, controls;
 /**
  * RigidBodies: array for all Three.js mesh(.userData.physicsBody contains info about the AmmoJS body)
  * tmpTrans: a temporary AmmoJS transform object
@@ -46,10 +46,12 @@ Ammo().then(() => {
 // Initialize Ammo.js
 const setupPhysicsWorld = () => {
     // Setup simple physics world for simulation
+
     let collisionConfiguration = new Ammo.btDefaultCollisionConfiguration(), // Default collision detector
         dispatcher = new Ammo.btCollisionDispatcher(collisionConfiguration),
-        overlappingPairCache = new Ammo.btDbvtBroadphase(), // Binary tree broadphase algorithm to use 
+        overlappingPairCache = new Ammo.btDbvtBroadphase(), // Binary tree broadphase algorithm to use
         solver = new Ammo.btSequentialImpulseConstraintSolver() // Allows objects to interact properly
+        
 
     physicsWorld = new Ammo.btDiscreteDynamicsWorld(dispatcher, overlappingPairCache) // Dynamic world
     physicsWorld.setGravity(new Ammo.btVector3(0, 0, 0))
@@ -108,7 +110,7 @@ const setupGraphics = () => {
     // renderer.gammaOutput = true
 
     // Setup OrbitControls(allows panning, moving around camera)
-    const orbitControls = new THREE.OrbitControls(camera, renderer.domElement)
+    controls = new THREE.OrbitControls(camera, renderer.domElement)
 
     // Render scene from light's POV and everything from light's perspective is lit up.
     renderer.shadowMap.enabled = true
@@ -130,13 +132,13 @@ class loadMol {
         this.x = Number(line.slice(30, 38))
         this.y = Number(line.slice(38, 46))
         this.z = Number(line.slice(46, 54))
-        this.vecPos = new THREE.Vector3(this.x, this.y, this.z)
-        this.name = ((this.is_antigen_chain ? "antigen_" : "antibody_") + n) // Creates label
+        this.posArr = [this.x, this.y, this.z]
         this.typeRendered = typeRendered
 
         // Antigen + chain labeling
         this.chain = line.slice(21, 22)
         this.is_antigen_chain = antigen_chains.includes(this.chain)
+        this.name = ((this.is_antigen_chain ? "antigen_" : "antibody_") + n) // Creates label
         this.colGroup = (this.is_antigen_chain + 1)*2
     }
     /** Translates the molecule; needs to be performed before rendering
@@ -154,7 +156,7 @@ class loadMol {
      * @param rot Optional parameter - the rotation of the mesh, auto [0, 0, 0]
      *            Note: w = cos(theta / 2), w=1 means 0 rotation angle around an undefined axis
      */
-    render(size = 1, rot = { x: 0, y: 0, z: 0, w: 1}, pos = {x: 0, y: 0, z: 0}) {
+    render(size = 5, rot = { x: 0, y: 0, z: 0, w: 1}, pos = {x: 0, y: 0, z: 0}) {
         let mass = !this.is_antigen_chain // A mass of 0 = mass of infinity, therefore they are fixed and do not move
 
         // Setup THREE.js mesh
@@ -189,7 +191,7 @@ class loadMol {
         body = new Ammo.btRigidBody(rbInfo)
         
         // addRigidBody(body, collision group it's a part of, collision groups it collides with joined by |)
-        physicsWorld.addRigidBody(body, this.colGroup, (this.colGroup == 2 ? 1 : 2))
+        physicsWorld.addRigidBody(body)
 
         // Add to rigidBodies array
         this.mol.userData.physicsBody = body
@@ -213,7 +215,11 @@ class loadMol {
 
 // Load PDB file
 let file_load = document.getElementById("pdb"),
-fr = new FileReader()
+fr = new FileReader(),
+avg_antibody = [0, 0, 0],
+avg_antigen = [0, 0, 0],
+antibody_count = 0,
+antigen_count = 0 // Number of antigen atoms in the PDB
 const loadPDB = () => {
     fr.onload = () => {
         let val = fr.result.split("\n").filter(x => {
@@ -224,10 +230,43 @@ const loadPDB = () => {
             if(!molecules[molecules.length - 1].is_antigen_chain) {
                 // Move molecule
                 molecules[molecules.length - 1].translate(-50, -50, -50)
+                antibody_count++
+                avg_antibody = [molecules[molecules.length - 1].x + avg_antibody[0], molecules[molecules.length - 1].y + avg_antibody[1], molecules[molecules.length - 1].z + avg_antibody[2]]
+            } else {
+                antigen_count++
+                avg_antigen = [molecules[molecules.length - 1].x + avg_antigen[0], molecules[molecules.length - 1].y + avg_antigen[1], molecules[molecules.length - 1].z + avg_antigen[2]]
             }
             molecules[molecules.length - 1].render()
             // molecules[molecules.length - 1].update()
         }
+        
+        /**
+         * Calculate the average position of both the antigen and antibody,
+         * We will use this to find the direction the antibody is from the antigen
+         * And where we should place the camera.
+         */ 
+        console.log(avg_antigen, avg_antibody)
+        avg_antigen = avg_antigen.map(val => {
+            return val / antigen_count
+        })
+        avg_antibody = avg_antibody.map(val => {
+            return val / antibody_count
+        })
+        
+        // Use this to find the direction
+        console.log(new THREE.Vector3(...avg_antibody), new THREE.Vector3(...avg_antigen))
+        tmpVec.setValue(...new THREE.Vector3(...avg_antibody).sub(new THREE.Vector3(...avg_antigen)).normalize().multiplyScalar(-1).toArray())
+        console.log(tmpVec)
+        /**
+         * arccos[(xa * xb + ya * yb + za * zb) / (√(xa2 + ya2 + za2) * √(xb2 + yb2 + zb2))]
+         */
+        
+        // Setup camera
+        camera.position.set(avg_antibody[0] - 20, avg_antibody[1], avg_antibody[2] - 20)
+        camera.lookAt(new THREE.Vector3(avg_antibody[0], avg_antibody[1], avg_antibody[2]))
+        controls.target = new THREE.Vector3(avg_antibody[0], avg_antibody[1], avg_antibody[2])
+        controls.update()
+
         renderFrame()
     }
     fr.readAsText(file_load.files[0])
@@ -237,13 +276,13 @@ file_load.addEventListener("change", loadPDB)
 // Step forward in AmmoJS world
 const updatePhysics = (deltaTime) => {
     // Step world
-    physicsWorld.stepSimulation(deltaTime, 10) // (time in ms passed, the max # of simulation steps within a fixed framerate)
+    physicsWorld.stepSimulation(deltaTime*20, 10) // (time in ms passed, the max # of simulation steps within a fixed framerate)
 
     // Update the rigid bodies
     for(let i = 0; i < molecules.length; i++) {
         if(!molecules[i].is_antigen_chain) { // Apply velocity
             molecules[i].update()
-            tmpVec.setValue(0, -5, -5)
+            // tmpVec.setValue(linear_pos)
             molecules[i].mol.userData.physicsBody.setLinearVelocity(tmpVec)
         }
     }
