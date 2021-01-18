@@ -1,5 +1,0 @@
-
-1. Full genome direct RNA sequencing of influenza A virus
-BioProject Accession: PRJNA449380
-ID: 449380
-
