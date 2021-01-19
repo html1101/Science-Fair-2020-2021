@@ -25,7 +25,7 @@ tmpTrans,
 tmpVec,
 defaultMargin = 0.05,
 molecules = [],
-antigen_chains = ["A", "B"] // For debugging, this will be explicitly set for the specific molecule we're working with.
+antigen_chains = ["A", "C", "E", "B", "D", "F"] // For debugging, this will be explicitly set for the specific molecule we're working with.
 
 // For bit masking(what will collide with what)
 let colGroupAntigen = 1,
@@ -116,102 +116,6 @@ const setupGraphics = () => {
     renderer.shadowMap.enabled = true
 }
 
-// Manage PDB files with class
-class loadMol {
-    /** Setup loadMol
-     * @param line The line containing the information about the atom being rendered
-     * @param n The line number we can use for labelling
-     * @param typeRendered The way the atom will be rendered(ball, box)
-     */
-    constructor(line, n, typeRendered = "ball") {
-        /**
-         * Positions 30-38: x value
-         * Positions 38-46: y value
-         * Positions 46-54: z value
-         */
-        this.x = Number(line.slice(30, 38))
-        this.y = Number(line.slice(38, 46))
-        this.z = Number(line.slice(46, 54))
-        this.posArr = [this.x, this.y, this.z]
-        this.typeRendered = typeRendered
-
-        // Antigen + chain labeling
-        this.chain = line.slice(21, 22)
-        this.is_antigen_chain = antigen_chains.includes(this.chain)
-        this.name = ((this.is_antigen_chain ? "antigen_" : "antibody_") + n) // Creates label
-        this.colGroup = (this.is_antigen_chain + 1)*2
-    }
-    /** Translates the molecule; needs to be performed before rendering
-     * @param x X value to translate by
-     * @param y Y value to translate by
-     * @param z Z value to translate by
-     */
-    translate(x, y, z) {
-        this.x += x
-        this.y += y
-        this.z += z
-    }
-    /** Render the atom given this.x, this.y, this.z
-     * @param size Optional parameter - the size of the atom, auto 5
-     * @param rot Optional parameter - the rotation of the mesh, auto [0, 0, 0]
-     *            Note: w = cos(theta / 2), w=1 means 0 rotation angle around an undefined axis
-     */
-    render(size = 5, rot = { x: 0, y: 0, z: 0, w: 1}, pos = {x: 0, y: 0, z: 0}) {
-        let mass = !this.is_antigen_chain // A mass of 0 = mass of infinity, therefore they are fixed and do not move
-
-        // Setup THREE.js mesh
-          this.mol = new THREE.Mesh( // FIX
-            new THREE.SphereGeometry(size, 20),
-            new THREE.MeshPhongMaterial({ color: (this.is_antigen_chain ? 0xff0000 : 0x00ffff)})
-        )
-
-        this.mol.position.set(this.x, this.y, this.z)
-
-        this.mol.castShadow = true
-        this.mol.receiveShadow = true
-
-        scene.add(this.mol)
-
-        // AmmoJS: setting up vector positon and quaternion
-        let transform = new Ammo.btTransform() // Used to transform points from one coordinate space to another
-        transform.setIdentity()
-        transform.setOrigin(new Ammo.btVector3(this.x, this.y, this.z))
-        transform.setRotation(new Ammo.btQuaternion(rot.x, rot.y, rot.z, rot.w))
-        let motionState = new Ammo.btDefaultMotionState(transform)
-
-        // AmmoJS: Sphere
-        let colShape = new Ammo.btSphereShape(size)
-        colShape.setMargin(defaultMargin) // defaultMargin
-
-        // AmmoJS: Inertia
-        let localInertia = new Ammo.btVector3(0, 0, 0)
-        colShape.calculateLocalInertia(mass, localInertia)
-
-        let rbInfo = new Ammo.btRigidBodyConstructionInfo(mass, motionState, colShape, localInertia),
-        body = new Ammo.btRigidBody(rbInfo)
-        
-        // addRigidBody(body, collision group it's a part of, collision groups it collides with joined by |)
-        physicsWorld.addRigidBody(body)
-
-        // Add to rigidBodies array
-        this.mol.userData.physicsBody = body
-        rigidBodies.push(this.mol)
-    }
-    /**Sync the atom's physics engine and THREE.js layers. */
-    update() {
-        let objThree = this.mol,
-        objAmmo = objThree.userData.physicsBody,
-        ms = objAmmo.getMotionState()
-
-        if (ms) {
-            ms.getWorldTransform(tmpTrans)
-            let p = tmpTrans.getOrigin(),
-            q = tmpTrans.getRotation()
-            objThree.position.set(p.x(), p.y(), p.z())
-            objThree.quaternion.set(q.x(), q.y(), q.z(), q.w())
-        }
-    }
-}
 
 // Load PDB file
 let file_load = document.getElementById("pdb"),
@@ -226,41 +130,9 @@ const loadPDB = () => {
             return x.slice(0, 4) == "ATOM"
         }) // The result of loading the file, filtered by atom(takes out header, remark lines, etc)
         for(let i = 0; i < val.length; i++) {
-            molecules.push(new loadMol(val[i], i))
-            if(!molecules[molecules.length - 1].is_antigen_chain) {
-                // Move molecule
-                molecules[molecules.length - 1].translate(-50, -50, -50)
-                antibody_count++
-                avg_antibody = [molecules[molecules.length - 1].x + avg_antibody[0], molecules[molecules.length - 1].y + avg_antibody[1], molecules[molecules.length - 1].z + avg_antibody[2]]
-            } else {
-                antigen_count++
-                avg_antigen = [molecules[molecules.length - 1].x + avg_antigen[0], molecules[molecules.length - 1].y + avg_antigen[1], molecules[molecules.length - 1].z + avg_antigen[2]]
-            }
-            molecules[molecules.length - 1].render()
-            // molecules[molecules.length - 1].update()
+            console.log(val[i])
         }
-        
-        /**
-         * Calculate the average position of both the antigen and antibody,
-         * We will use this to find the direction the antibody is from the antigen
-         * And where we should place the camera.
-         */ 
-        console.log(avg_antigen, avg_antibody)
-        avg_antigen = avg_antigen.map(val => {
-            return val / antigen_count
-        })
-        avg_antibody = avg_antibody.map(val => {
-            return val / antibody_count
-        })
-        
-        // Use this to find the direction
-        console.log(new THREE.Vector3(...avg_antibody), new THREE.Vector3(...avg_antigen))
-        tmpVec.setValue(...new THREE.Vector3(...avg_antibody).sub(new THREE.Vector3(...avg_antigen)).normalize().multiplyScalar(-1).toArray())
-        console.log(tmpVec)
-        /**
-         * arccos[(xa * xb + ya * yb + za * zb) / (√(xa2 + ya2 + za2) * √(xb2 + yb2 + zb2))]
-         */
-        
+    
         // Setup camera
         camera.position.set(avg_antibody[0] - 20, avg_antibody[1], avg_antibody[2] - 20)
         camera.lookAt(new THREE.Vector3(avg_antibody[0], avg_antibody[1], avg_antibody[2]))
