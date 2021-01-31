@@ -1,0 +1,166 @@
+LOCUS       NC_045512               3822 bp ss-RNA     linear   VRL 18-JUL-2020
+DEFINITION  Severe acute respiratory syndrome coronavirus 2 isolate Wuhan-Hu-1,
+            complete genome.
+ACCESSION   NC_045512 REGION: 21563..25384
+VERSION     NC_045512.2
+DBLINK      BioProject: PRJNA485481
+KEYWORDS    RefSeq.
+SOURCE      Severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2)
+  ORGANISM  Severe acute respiratory syndrome coronavirus 2
+            Viruses; Riboviria; Orthornavirae; Pisuviricota; Pisoniviricetes;
+            Nidovirales; Cornidovirineae; Coronaviridae; Orthocoronavirinae;
+            Betacoronavirus; Sarbecovirus.
+REFERENCE   1  (bases 1 to 3822)
+  AUTHORS   Wu,F., Zhao,S., Yu,B., Chen,Y.M., Wang,W., Song,Z.G., Hu,Y.,
+            Tao,Z.W., Tian,J.H., Pei,Y.Y., Yuan,M.L., Zhang,Y.L., Dai,F.H.,
+            Liu,Y., Wang,Q.M., Zheng,J.J., Xu,L., Holmes,E.C. and Zhang,Y.Z.
+  TITLE     A new coronavirus associated with human respiratory disease in
+            China
+  JOURNAL   Nature 579 (7798), 265-269 (2020)
+   PUBMED   32015508
+  REMARK    Erratum:[Nature. 2020 Apr;580(7803):E7. PMID: 32296181]
+REFERENCE   2  (bases 1 to 3822)
+  CONSRTM   NCBI Genome Project
+  TITLE     Direct Submission
+  JOURNAL   Submitted (17-JAN-2020) National Center for Biotechnology
+            Information, NIH, Bethesda, MD 20894, USA
+REFERENCE   3  (bases 1 to 3822)
+  AUTHORS   Wu,F., Zhao,S., Yu,B., Chen,Y.-M., Wang,W., Hu,Y., Song,Z.-G.,
+            Tao,Z.-W., Tian,J.-H., Pei,Y.-Y., Yuan,M.L., Zhang,Y.-L.,
+            Dai,F.-H., Liu,Y., Wang,Q.-M., Zheng,J.-J., Xu,L., Holmes,E.C. and
+            Zhang,Y.-Z.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (05-JAN-2020) Shanghai Public Health Clinical Center &
+            School of Public Health, Fudan University, Shanghai, China
+COMMENT     REVIEWED REFSEQ: This record has been curated by NCBI staff. The
+            reference sequence is identical to MN908947.
+            On Jan 17, 2020 this sequence version replaced NC_045512.1.
+            Annotation was added using homology to SARSr-CoV NC_004718.3. ###
+            Formerly called 'Wuhan seafood market pneumonia virus.' If you have
+            questions or suggestions, please email us at info@ncbi.nlm.nih.gov
+            and include the accession number NC_045512.### Protein structures
+            can be found at
+            https://www.ncbi.nlm.nih.gov/structure/?term=sars-cov-2.### Find
+            all other Severe acute respiratory syndrome coronavirus 2
+            (SARS-CoV-2) sequences at
+            https://www.ncbi.nlm.nih.gov/genbank/sars-cov-2-seqs/
+            
+            ##Assembly-Data-START##
+            Assembly Method       :: Megahit v. V1.1.3
+            Sequencing Technology :: Illumina
+            ##Assembly-Data-END##
+            COMPLETENESS: full length.
+FEATURES             Location/Qualifiers
+     source          1..3822
+                     /organism="Severe acute respiratory syndrome coronavirus
+                     2"
+                     /mol_type="genomic RNA"
+                     /isolate="Wuhan-Hu-1"
+                     /host="Homo sapiens"
+                     /db_xref="taxon:2697049"
+                     /country="China"
+                     /collection_date="Dec-2019"
+     gene            1..3822
+                     /gene="S"
+                     /locus_tag="GU280_gp02"
+                     /gene_synonym="spike glycoprotein"
+                     /db_xref="GeneID:43740568"
+     CDS             1..3822
+                     /gene="S"
+                     /locus_tag="GU280_gp02"
+                     /gene_synonym="spike glycoprotein"
+                     /note="structural protein; spike protein"
+                     /codon_start=1
+                     /product="surface glycoprotein"
+                     /protein_id="YP_009724390.1"
+                     /db_xref="GeneID:43740568"
+                     /translation="MFVFLVLLPLVSSQCVNLTTRTQLPPAYTNSFTRGVYYPDKVFR
+                     SSVLHSTQDLFLPFFSNVTWFHAIHVSGTNGTKRFDNPVLPFNDGVYFASTEKSNIIR
+                     GWIFGTTLDSKTQSLLIVNNATNVVIKVCEFQFCNDPFLGVYYHKNNKSWMESEFRVY
+                     SSANNCTFEYVSQPFLMDLEGKQGNFKNLREFVFKNIDGYFKIYSKHTPINLVRDLPQ
+                     GFSALEPLVDLPIGINITRFQTLLALHRSYLTPGDSSSGWTAGAAAYYVGYLQPRTFL
+                     LKYNENGTITDAVDCALDPLSETKCTLKSFTVEKGIYQTSNFRVQPTESIVRFPNITN
+                     LCPFGEVFNATRFASVYAWNRKRISNCVADYSVLYNSASFSTFKCYGVSPTKLNDLCF
+                     TNVYADSFVIRGDEVRQIAPGQTGKIADYNYKLPDDFTGCVIAWNSNNLDSKVGGNYN
+                     YLYRLFRKSNLKPFERDISTEIYQAGSTPCNGVEGFNCYFPLQSYGFQPTNGVGYQPY
+                     RVVVLSFELLHAPATVCGPKKSTNLVKNKCVNFNFNGLTGTGVLTESNKKFLPFQQFG
+                     RDIADTTDAVRDPQTLEILDITPCSFGGVSVITPGTNTSNQVAVLYQDVNCTEVPVAI
+                     HADQLTPTWRVYSTGSNVFQTRAGCLIGAEHVNNSYECDIPIGAGICASYQTQTNSPR
+                     RARSVASQSIIAYTMSLGAENSVAYSNNSIAIPTNFTISVTTEILPVSMTKTSVDCTM
+                     YICGDSTECSNLLLQYGSFCTQLNRALTGIAVEQDKNTQEVFAQVKQIYKTPPIKDFG
+                     GFNFSQILPDPSKPSKRSFIEDLLFNKVTLADAGFIKQYGDCLGDIAARDLICAQKFN
+                     GLTVLPPLLTDEMIAQYTSALLAGTITSGWTFGAGAALQIPFAMQMAYRFNGIGVTQN
+                     VLYENQKLIANQFNSAIGKIQDSLSSTASALGKLQDVVNQNAQALNTLVKQLSSNFGA
+                     ISSVLNDILSRLDKVEAEVQIDRLITGRLQSLQTYVTQQLIRAAEIRASANLAATKMS
+                     ECVLGQSKRVDFCGKGYHLMSFPQSAPHGVVFLHVTYVPAQEKNFTTAPAICHDGKAH
+                     FPREGVFVSNGTHWFVTQRNFYEPQIITTDNTFVSGNCDVVIGIVNNTVYDPLQPELD
+                     SFKEELDKYFKNHTSPDVDLGDISGINASVVNIQKEIDRLNEVAKNLNESLIDLQELG
+                     KYEQYIKWPWYIWLGFIAGLIAIVMVTIMLCCMTSCCSCLKGCCSCGSCCKFDEDDSE
+                     PVLKGVKLHYT"
+ORIGIN      
+        1 atgtttgttt ttcttgtttt attgccacta gtctctagtc agtgtgttaa tcttacaacc
+       61 agaactcaat taccccctgc atacactaat tctttcacac gtggtgttta ttaccctgac
+      121 aaagttttca gatcctcagt tttacattca actcaggact tgttcttacc tttcttttcc
+      181 aatgttactt ggttccatgc tatacatgtc tctgggacca atggtactaa gaggtttgat
+      241 aaccctgtcc taccatttaa tgatggtgtt tattttgctt ccactgagaa gtctaacata
+      301 ataagaggct ggatttttgg tactacttta gattcgaaga cccagtccct acttattgtt
+      361 aataacgcta ctaatgttgt tattaaagtc tgtgaatttc aattttgtaa tgatccattt
+      421 ttgggtgttt attaccacaa aaacaacaaa agttggatgg aaagtgagtt cagagtttat
+      481 tctagtgcga ataattgcac ttttgaatat gtctctcagc cttttcttat ggaccttgaa
+      541 ggaaaacagg gtaatttcaa aaatcttagg gaatttgtgt ttaagaatat tgatggttat
+      601 tttaaaatat attctaagca cacgcctatt aatttagtgc gtgatctccc tcagggtttt
+      661 tcggctttag aaccattggt agatttgcca ataggtatta acatcactag gtttcaaact
+      721 ttacttgctt tacatagaag ttatttgact cctggtgatt cttcttcagg ttggacagct
+      781 ggtgctgcag cttattatgt gggttatctt caacctagga cttttctatt aaaatataat
+      841 gaaaatggaa ccattacaga tgctgtagac tgtgcacttg accctctctc agaaacaaag
+      901 tgtacgttga aatccttcac tgtagaaaaa ggaatctatc aaacttctaa ctttagagtc
+      961 caaccaacag aatctattgt tagatttcct aatattacaa acttgtgccc ttttggtgaa
+     1021 gtttttaacg ccaccagatt tgcatctgtt tatgcttgga acaggaagag aatcagcaac
+     1081 tgtgttgctg attattctgt cctatataat tccgcatcat tttccacttt taagtgttat
+     1141 ggagtgtctc ctactaaatt aaatgatctc tgctttacta atgtctatgc agattcattt
+     1201 gtaattagag gtgatgaagt cagacaaatc gctccagggc aaactggaaa gattgctgat
+     1261 tataattata aattaccaga tgattttaca ggctgcgtta tagcttggaa ttctaacaat
+     1321 cttgattcta aggttggtgg taattataat tacctgtata gattgtttag gaagtctaat
+     1381 ctcaaacctt ttgagagaga tatttcaact gaaatctatc aggccggtag cacaccttgt
+     1441 aatggtgttg aaggttttaa ttgttacttt cctttacaat catatggttt ccaacccact
+     1501 aatggtgttg gttaccaacc atacagagta gtagtacttt cttttgaact tctacatgca
+     1561 ccagcaactg tttgtggacc taaaaagtct actaatttgg ttaaaaacaa atgtgtcaat
+     1621 ttcaacttca atggtttaac aggcacaggt gttcttactg agtctaacaa aaagtttctg
+     1681 cctttccaac aatttggcag agacattgct gacactactg atgctgtccg tgatccacag
+     1741 acacttgaga ttcttgacat tacaccatgt tcttttggtg gtgtcagtgt tataacacca
+     1801 ggaacaaata cttctaacca ggttgctgtt ctttatcagg atgttaactg cacagaagtc
+     1861 cctgttgcta ttcatgcaga tcaacttact cctacttggc gtgtttattc tacaggttct
+     1921 aatgtttttc aaacacgtgc aggctgttta ataggggctg aacatgtcaa caactcatat
+     1981 gagtgtgaca tacccattgg tgcaggtata tgcgctagtt atcagactca gactaattct
+     2041 cctcggcggg cacgtagtgt agctagtcaa tccatcattg cctacactat gtcacttggt
+     2101 gcagaaaatt cagttgctta ctctaataac tctattgcca tacccacaaa ttttactatt
+     2161 agtgttacca cagaaattct accagtgtct atgaccaaga catcagtaga ttgtacaatg
+     2221 tacatttgtg gtgattcaac tgaatgcagc aatcttttgt tgcaatatgg cagtttttgt
+     2281 acacaattaa accgtgcttt aactggaata gctgttgaac aagacaaaaa cacccaagaa
+     2341 gtttttgcac aagtcaaaca aatttacaaa acaccaccaa ttaaagattt tggtggtttt
+     2401 aatttttcac aaatattacc agatccatca aaaccaagca agaggtcatt tattgaagat
+     2461 ctacttttca acaaagtgac acttgcagat gctggcttca tcaaacaata tggtgattgc
+     2521 cttggtgata ttgctgctag agacctcatt tgtgcacaaa agtttaacgg ccttactgtt
+     2581 ttgccacctt tgctcacaga tgaaatgatt gctcaataca cttctgcact gttagcgggt
+     2641 acaatcactt ctggttggac ctttggtgca ggtgctgcat tacaaatacc atttgctatg
+     2701 caaatggctt ataggtttaa tggtattgga gttacacaga atgttctcta tgagaaccaa
+     2761 aaattgattg ccaaccaatt taatagtgct attggcaaaa ttcaagactc actttcttcc
+     2821 acagcaagtg cacttggaaa acttcaagat gtggtcaacc aaaatgcaca agctttaaac
+     2881 acgcttgtta aacaacttag ctccaatttt ggtgcaattt caagtgtttt aaatgatatc
+     2941 ctttcacgtc ttgacaaagt tgaggctgaa gtgcaaattg ataggttgat cacaggcaga
+     3001 cttcaaagtt tgcagacata tgtgactcaa caattaatta gagctgcaga aatcagagct
+     3061 tctgctaatc ttgctgctac taaaatgtca gagtgtgtac ttggacaatc aaaaagagtt
+     3121 gatttttgtg gaaagggcta tcatcttatg tccttccctc agtcagcacc tcatggtgta
+     3181 gtcttcttgc atgtgactta tgtccctgca caagaaaaga acttcacaac tgctcctgcc
+     3241 atttgtcatg atggaaaagc acactttcct cgtgaaggtg tctttgtttc aaatggcaca
+     3301 cactggtttg taacacaaag gaatttttat gaaccacaaa tcattactac agacaacaca
+     3361 tttgtgtctg gtaactgtga tgttgtaata ggaattgtca acaacacagt ttatgatcct
+     3421 ttgcaacctg aattagactc attcaaggag gagttagata aatattttaa gaatcataca
+     3481 tcaccagatg ttgatttagg tgacatctct ggcattaatg cttcagttgt aaacattcaa
+     3541 aaagaaattg accgcctcaa tgaggttgcc aagaatttaa atgaatctct catcgatctc
+     3601 caagaacttg gaaagtatga gcagtatata aaatggccat ggtacatttg gctaggtttt
+     3661 atagctggct tgattgccat agtaatggtg acaattatgc tttgctgtat gaccagttgc
+     3721 tgtagttgtc tcaagggctg ttgttcttgt ggatcctgct gcaaatttga tgaagacgac
+     3781 tctgagccag tgctcaaagg agtcaaatta cattacacat aa
+//
+
