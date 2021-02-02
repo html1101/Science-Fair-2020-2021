@@ -62,20 +62,22 @@ Feb. 20: Presentation
 Feb. 1
 - [x] Research plan
 - [x] Extra forms
-- [ ] Implement CAI index
-- [ ] Background
+- [x] Implement CAI index
+- [x] Background
 - [x] Rationale
-- [ ] Create vaccine given specific features(codon_mapping.py + identify_antigen.py)
+- [x] Create vaccine given specific features(codon_mapping.py + identify_antigen.py)
 
 Feb. 2
 - [ ] Introduction
 - [ ] Purpose
-- [ ] Materials
+- [x] Materials
+- [ ] Background
+- [ ] Implement CAI index
 - [ ] Bibliography
 - [ ] GA - [ ] Create population, measure fitness, and population selection
 
 Feb. 3
-- [ ] Procedure
+- [x] Procedure
 - [ ] GA - [ ] Implement mutation, population selection
 - [ ] Implement self-replicating vaccine
 
