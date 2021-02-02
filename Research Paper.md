@@ -184,6 +184,7 @@ https://www.ncbi.nlm.nih.gov/Taxonomy/taxonomyhome.html/index.cgi?chapter=cgenco
 https://deepmind.com/blog/article/alphafold-a-solution-to-a-50-year-old-grand-challenge-in-biology
 https://www.predictioncenter.org/casp13/index.cgi?page=format#RR
 http://genesilico.pl/gdserver/GDFuzz3D/help.html
+Pietal, M.J., Bujnicki, J.M. and Kozlowski, L.P., 2015. GDFuzz3D: a method for protein 3D structure reconstruction from contact maps, based on a non-Euclidean distance function. Bioinformatics, 31(21), pp.3499-3505.
 Schenck, Ryan O. and Lakatos, Eszter and Gatenbee, Chandler and Graham, Trevor A. and Anderson, Alexander R. A. NeoPredPipe: high-throughput neoantigen prediction and recognition potential pipeline. BMC Bioinformatics. 2019. 20:264. https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-019-2876-4
 https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7766040/
 https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-019-2876-4#Sec2
@@ -197,3 +198,4 @@ https://bmcsystbiol.biomedcentral.com/articles/10.1186/1752-0509-6-134
 https://www.nature.com/articles/s41598-020-74091-z
 https://www.biorxiv.org/content/10.1101/640862v1.full.pdf
 https://www.hindawi.com/journals/jir/2017/2680160/
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC340524/pdf/nar00247-0410.pdf

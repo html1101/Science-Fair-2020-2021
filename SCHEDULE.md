@@ -27,12 +27,12 @@ Feb. 20: Presentation
 - [x] Team status
 - [x] Project start date
 - [x] Survey questions
-- [ ] Research Plan
-- [ ] Extra Forms
-- [ ] Bibliography
-- [ ] Research Locations
-- [ ] External Signatures
-- [ ] Project Approval Method
+- [x] Research Plan
+- [x] Extra Forms
+- [x] Bibliography
+- [x] Research Locations
+- [x] External Signatures
+- [x] Project Approval Method
 - [ ] Teacher Approval
 - [ ] IRB Approval
 - [ ] SRC Approval
@@ -44,95 +44,99 @@ Feb. 20: Presentation
 
 **Parts**
 - [ ] Background
-- [ ] Rationale
+- [x] Rationale
 - [ ] Introduction
 - [ ] Purpose
-- [ ] Hypothesis
+- [x] Hypothesis
 - [ ] Code
-- [ ] Procedure
-- [ ] Materials
+- [x] Procedure
+- [x] Materials
 - [ ] Conclusion
   - [ ] Problems Encountered
   - [ ] Future Expansions
   - [ ] Practical Applications
 - [ ] Bibliography
 
-**Day-by-Day**<br>
+**Day-by-Day**
+
 Feb. 1
-- Research plan
-- Extra forms
-- Implement CAI index
-- Background
-- Rationale
-- Create vaccine given specific features(codon_mapping.py + identify_antigen.py)
+- [x] Research plan
+- [x] Extra forms
+- [ ] Implement CAI index
+- [ ] Background
+- [x] Rationale
+- [ ] Create vaccine given specific features(codon_mapping.py + identify_antigen.py)
 
 Feb. 2
-- Introduction
-- Purpose
-- Materials
-- Bibliography
-- GA - Create population, measure fitness, and population selection
+- [ ] Introduction
+- [ ] Purpose
+- [ ] Materials
+- [ ] Bibliography
+- [ ] GA - [ ] Create population, measure fitness, and population selection
 
 Feb. 3
-- Procedure
-- GA - Implement mutation, population selection
-- Implement self-replicating vaccine
+- [ ] Procedure
+- [ ] GA - [ ] Implement mutation, population selection
+- [ ] Implement self-replicating vaccine
 
 Feb. 4
-- Problems Encountered
-- Create simple shell script to execute
-- Implement self-replicating vaccine
+- [ ] Problems Encountered
+- [ ] Create simple shell script to execute
+- [ ] Implement self-replicating vaccine
 
 Feb. 5
-- Future Expansions
-- Practical Applications
-- Implement self-replicating vaccine
-- Apply GA to 3 viruses
-- If at a good place, talk to Mr. Nydegger
+- [ ] Future Expansions
+- [ ] Practical Applications
+- [ ] Implement self-replicating vaccine
+- [ ] Apply GA to 3 viruses
+- [ ] If at a good place, talk to Mr. Nydegger
 
 Feb. 6
-- Wild card day: Polishing, fixing bugs, optimizing GA
-- Connect self-replicating vaccine to lookup table, find corresponding structural proteins
-- Rendering:
-  - Antigen shading
-  - Run vaccine through AlphaFold + render w/ GFuzz
-- Select best 5' and 3' UTRs + cap
-- Conclusion
+- [ ] Wild card day: Polishing, fixing bugs, optimizing GA
+- [ ] Connect self-replicating vaccine to lookup table, find corresponding structural proteins
+- [ ] Rendering:
+  - [ ] Antigen shading
+  - [ ] Run vaccine through AlphaFold + render w/ GFuzz
+- [ ] Select best 5' and 3' UTRs + cap
+- [ ] Conclusion
 
 Feb. 7
-- Annotate code!
-- Major clean-up of files
-- Continue rendering
-- Conclusion
-- Optimize
+- [ ] Annotate code!
+- [ ] Major clean-up of files
+- [ ] Continue rendering
+- [ ] Conclusion
+- [ ] Optimize
 
 Feb. 8
-- Presentation work
-- Continue rendering work
-- Slides
-- Self-replication work
+- [ ] Presentation work
+- [ ] Continue rendering work
+- [ ] Slides
+- [ ] Self-replication work
 
 Feb. 9
-- Rendering
-- Presentation
-- Slides
-- Self-replication work
+- [ ] Rendering
+- [ ] Presentation
+- [ ] Slides
+- [ ] Self-replication work
 
 Feb. 10
-- Rendering
-- Apply GA to more viruses
-- Optimize GA if possible
+- [ ] Rendering
+- [ ] Apply GA to more viruses
+- [ ] Optimize GA if possible
+- [ ] Creating UI
 
 Feb. 11
-- Optimize GA
-- Apply GA to more viruses
-- Self-replication work
-- Slides
+- [ ] Optimize GA
+- [ ] Apply GA to more viruses
+- [ ] Self-replication work
+- [ ] Slides
+- [ ] Creating UI
 
 Feb. 11
-- Filler - Add more info to binder
-- Slides
+- [ ] Filler - [ ] Add more info to binder
+- [ ] Slides
+- [ ] Creating UI
 
 Feb. 12
-- Putting down final results
-- Finalizing slides
+- [ ] Putting down final results
+- [ ] Finalizing slides
