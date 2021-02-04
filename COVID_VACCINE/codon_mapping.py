@@ -15,8 +15,8 @@ flags.DEFINE_boolean('compare', False, "Whether or not to compare to real vaccin
 flags.DEFINE_string('file', 'COVID_VACCINE/ncov-s', "Name of file to read from. Default Sars-CoV virus.")
 flags.DEFINE_string('debug', 'COVID_VACCINE/vaccine-s', "Name of file to use for comparison. Default Sars-CoV vaccine.")
 
-PATH_codon_map = "COVID_VACCINE/vaccine_dict.json"
-PATH_codon_to_protein = "COVID_VACCINE/codon_to_protein.json"
+PATH_codon_map = "vaccine_dict.json"
+PATH_codon_to_protein = "codon_to_protein.json"
 
 def read_fasta(file_name):
     # Read fasta file
