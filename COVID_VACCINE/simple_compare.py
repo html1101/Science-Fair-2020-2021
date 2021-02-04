@@ -5,12 +5,13 @@ Given two sequences, compare the two by the following:
 - Codon differences - How similar the codon sequences are.
 """
 
+from scipy.stats import norm
 
 class SequenceComp:
     def __init__(
             self,
-            seq_1: "The first sequence to compare; this is the predicted sequence.",
-            seq_2: "The second sequence to compare."):
+            seq_1, # The first sequence to compare; this is the predicted sequence.
+            seq_2): # The second sequence to compare.
         self.seq_1 = seq_1
         self.seq_2 = seq_2
         # assert len(self.seq_1) == len(self.seq_2)
@@ -34,10 +35,14 @@ class SequenceComp:
                 loc_differ += "!"
                 num_differences += 1
         return loc_differ, num_differences
-
+    # def conv_to_protein(self):
+    #     s = ""
+    #     for i in range(0, len(self.seq), 3):
+    #         s += codonProtein[self.seq[i:i+3]]
+        # return s
     def protein_compare(
             self,
-            codon_to_protein: "Dictionary with codon => protein"):
+            codon_to_protein): # Dictionary with codon => protein
         loc_differ = ""
         translated_codons_pred = ""
         translated_codons_act = ""
@@ -70,7 +75,7 @@ class SequenceComp:
 
     def print_compare(
             self,
-            cod_to_prot: "Codon to protein dictionary."):
+            cod_to_prot): # Codon to protein dictionary.
         resultsN, diffN = self.rna_compare()
         codP, codA, resultsP, diffP = self.protein_compare(cod_to_prot)
         codonC, codonD = self.codon_compare()
@@ -97,9 +102,9 @@ class SequenceComp:
         print(F"Codon differences:\n\t{codonD}")
         print(
             F"\tCodon: {round((1-(codonD/(len(self.seq_1)/3)))*100)}% similarity")
-
     def change_seq(
             self,
-            name: "Name: either seq_1 or seq_2",
-            change_to: "New sequence to change to"):
-        self[name] = change_to
+            name, # Name: either seq_1 or seq_2
+            change_to): # New sequence to change to
+        # self[name] = change_to
+        setattr(self, name, change_to)

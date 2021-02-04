@@ -6,12 +6,14 @@ from absl import flags # To pass arguments
 import time
 from simple_compare import SequenceComp 
 
+global actual_vaccineF
+
 FLAGS = flags.FLAGS
 
 # flags.DEFINE_string('output', "COVID_VACCINE/Seq", 'Name of file to push to + .fasta. Default file.fasta.')
 flags.DEFINE_boolean('compare', False, "Whether or not to compare to real vaccine.")
-flags.DEFINE_string('file', 'COVID_VACCINE/ncov-s.fasta.txt', "Name of file to read from. Default Sars-CoV virus.")
-flags.DEFINE_string('debug', 'COVID_VACCINE/vaccine-s.fasta.txt', "Name of file to use for comparison. Default Sars-CoV vaccine.")
+flags.DEFINE_string('file', 'COVID_VACCINE/ncov-s', "Name of file to read from. Default Sars-CoV virus.")
+flags.DEFINE_string('debug', 'COVID_VACCINE/vaccine-s', "Name of file to use for comparison. Default Sars-CoV vaccine.")
 
 PATH_codon_map = "COVID_VACCINE/vaccine_dict.json"
 PATH_codon_to_protein = "COVID_VACCINE/codon_to_protein.json"
@@ -21,7 +23,7 @@ def read_fasta(file_name):
     return "".join(open(file_name, "r").read().split("\n")[1:])
 
 # Open COVID spike protein file and codon map
-codonMap = json.loads(open(PATH_codon_map, "r").read())
+# codonMap = json.loads(open(PATH_codon_map, "r").read())
 codonProtein = json.loads(open(PATH_codon_to_protein, "r").read())
 
 def conv_to_protein(seq):
@@ -31,7 +33,8 @@ def conv_to_protein(seq):
     return s
 
 # Optimize virus for vaccine given codon map
-def codon_optimize(spike):
+def codon_optimize(spike, codon_PATH):
+    codonMap = json.loads(open(codon_PATH, "r").read())
     newVaccine = ""
     # Now circulate through the codons, reading the nucleotide bases 3 at a time.
     for i in range(0, len(spike), 3):
@@ -39,17 +42,17 @@ def codon_optimize(spike):
         newVaccine += codonMap.get(spike[i:i+3], spike[i:i+3])
     return newVaccine
 
-def main(argv):
+def main(_argv):
     # Read input sequence file
     PATH_CoV = FLAGS.file + ".fasta"
     spikeF = read_fasta(PATH_CoV)
 
     # Read comparison file
     if FLAGS.compare:
-        PATH_vaccine = FLAGS.debug
+        PATH_vaccine = FLAGS.debug + ".fasta"
         actual_vaccineF = read_fasta(PATH_vaccine)
 
-    codon_op_output = codon_optimize(spikeF)
+    codon_op_output = codon_optimize(spikeF, PATH_codon_map)
     print("\n\nNUCLEOTIDE SEQUENCE\n-------------------------")
     print(codon_op_output)
     # Write to file FLAGS.output

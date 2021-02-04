@@ -1,11 +1,149 @@
-**SCIENCE FAIR 2020-2021**
-Creating Antibodies Using Genetic Algorithms
+<h1>mRNA Sequence Design Using Genetic Optimization</h1>
+<sub>Science Fair 2020-2021</sub>
+<hr>
 
-Steps(Using Javascript):
-- Load 4uif.pdb and the FASTA. That will be the PDB(protein data base) file that we will use, as well as the genetic code(which we'll use later; it helps us identify the chains).
-This file describes the Dengue virus and the human antibodies surrounding it.
-- Now, within application_viewer, do the following:
-  - Load OIMO.js and Three.js. OIMO is a wrapper of Three.js that provides a simple physics simulator.
-  - Render the antigen molecules described within the .pdb.
-  - Find the epitopes - Currently the focus of this project is on forming the antibodies rather than identifying the epitopes, so the epitopes are not the highest priority; right now we are finding for the antibody the closest corresponding antigen values and identifying those as the sections we will suppress. Then we will attach "magnets" to that area such that all randomly produced antibodies are attracted to those points.
-  - Work on the genetic algorithm. The fitness function is how well it suppresses the antigen, and each unit within the population will contain a heavy and light chain, just like a normal antibody. The first step will be creating the coordinates, then later the project could use tools such as DeepMind to find the corresponding proteins.
+SCHEDULE
+
+---------
+**Big Dates**
+
+Feb. 7: Scienteer finished
+
+Feb. 13: Slides finished
+
+Feb. 15: Hear from judges
+
+Feb. 20: Presentation
+
+
+**Todo**
+- Find the antigen
+  - Given antigen name, isolate it within full genome and run program on it
+  - Create lookup table and identify which to use
+- Create GA measuring:
+  - GC content
+  - Codon optimization(looking at frequency of codons in human body & use less rare ones)
+  - Hairpin structures
+  - CAI Index
+- Fix collapsed
+
+**Scienteer Info**
+- [x] Title and category
+- [x] Team status
+- [x] Project start date
+- [x] Survey questions
+- [x] Research Plan
+- [x] Extra Forms
+- [x] Bibliography
+- [x] Research Locations
+- [x] External Signatures
+- [x] Project Approval Method
+- [ ] Teacher Approval
+- [ ] IRB Approval
+- [ ] SRC Approval
+- [ ] Project end date
+- [ ] 1C Signature
+- [ ] SRC Post-approval
+- [ ] Project Summary
+- [ ] Abstract
+
+**Parts**
+- [ ] Background
+- [x] Rationale
+- [ ] Introduction
+- [ ] Purpose
+- [x] Hypothesis
+- [ ] Code
+- [x] Procedure
+- [x] Materials
+- [ ] Conclusion
+  - [ ] Problems Encountered
+  - [ ] Future Expansions
+  - [ ] Practical Applications
+- [ ] Bibliography
+
+**Day-by-Day**
+
+Feb. 1
+- [x] Research plan
+- [x] Extra forms
+- [x] Implement CAI index
+- [x] Background
+- [x] Rationale
+- [x] Create vaccine given specific features(codon_mapping.py + identify_antigen.py)
+
+Feb. 2
+- [x] Materials
+- [ ] Background
+- [x] Implement CAI index
+
+Feb. 3
+- [ ] Introduction
+- [ ] Purpose
+- [x] Procedure
+- [ ] GA - [ ] Implement mutation, population selection
+- [ ] Implement self-replicating vaccine
+- [ ] Bibliography
+- [ ] GA - Create population, measure fitness, and population selection
+
+Feb. 4
+- [ ] Problems Encountered
+- [ ] Create simple shell script to execute
+- [ ] Implement self-replicating vaccine
+
+Feb. 5
+- [ ] Future Expansions
+- [ ] Practical Applications
+- [ ] Implement self-replicating vaccine
+- [ ] Apply GA to 3 viruses
+- [ ] If at a good place, talk to Mr. Nydegger
+
+Feb. 6
+- [ ] Wild card day: Polishing, fixing bugs, optimizing GA
+- [ ] Connect self-replicating vaccine to lookup table, find corresponding structural proteins
+- [ ] Rendering:
+  - [ ] Antigen shading
+  - [ ] Run vaccine through AlphaFold + render w/ GFuzz
+- [ ] Select best 5' and 3' UTRs + cap
+- [ ] Conclusion
+
+Feb. 7
+- [ ] Annotate code!
+- [ ] Major clean-up of files
+- [ ] Continue rendering
+- [ ] Conclusion
+- [ ] Optimize
+
+Feb. 8
+- [ ] Presentation work
+- [ ] Continue rendering work
+- [ ] Slides
+- [ ] Self-replication work
+
+Feb. 9
+- [ ] Rendering
+- [ ] Presentation
+- [ ] Slides
+- [ ] Self-replication work
+
+Feb. 10
+- [ ] Rendering
+- [ ] Apply GA to more viruses
+- [ ] Optimize GA if possible
+- [ ] Creating UI
+
+Feb. 11
+- [ ] Optimize GA
+- [ ] Apply GA to more viruses
+- [ ] Self-replication work
+- [ ] Slides
+- [ ] Creating UI
+
+Feb. 11
+- [ ] Filler - [ ] Add more info to binder
+- [ ] Slides
+- [ ] Creating UI
+
+Feb. 12
+- [ ] Putting down final results
+- [ ] Finalizing slides

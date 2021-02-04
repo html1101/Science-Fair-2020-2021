@@ -1,4 +1,9 @@
+<h1>mRNA Sequence Design Using Genetic Optimization</h1>
+<sub>Science Fair 2020-2021</sub>
+<hr>
+
 SCHEDULE
+
 ---------
 **Big Dates**
 
@@ -68,18 +73,18 @@ Feb. 1
 - [x] Create vaccine given specific features(codon_mapping.py + identify_antigen.py)
 
 Feb. 2
-- [ ] Introduction
-- [ ] Purpose
 - [x] Materials
 - [ ] Background
-- [ ] Implement CAI index
-- [ ] Bibliography
-- [ ] GA - [ ] Create population, measure fitness, and population selection
+- [x] Implement CAI index
 
 Feb. 3
+- [ ] Introduction
+- [ ] Purpose
 - [x] Procedure
 - [ ] GA - [ ] Implement mutation, population selection
 - [ ] Implement self-replicating vaccine
+- [ ] Bibliography
+- [ ] GA - Create population, measure fitness, and population selection
 
 Feb. 4
 - [ ] Problems Encountered
