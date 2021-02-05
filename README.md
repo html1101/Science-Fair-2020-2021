@@ -74,22 +74,22 @@ Feb. 1
 
 Feb. 2
 - [x] Materials
-- [ ] Background
 - [x] Implement CAI index
 
 Feb. 3
-- [ ] Introduction
-- [ ] Purpose
 - [x] Procedure
-- [ ] GA - [ ] Implement mutation, population selection
-- [ ] Implement self-replicating vaccine
-- [ ] Bibliography
-- [ ] GA - Create population, measure fitness, and population selection
+- [x] GA - Implement mutation, population selection
 
 Feb. 4
 - [ ] Problems Encountered
 - [ ] Create simple shell script to execute
 - [ ] Implement self-replicating vaccine
+- [ ] Bibliography
+- [ ] Introduction
+- [ ] Purpose
+- [ ] Background
+- [ ] GA - Create population, measure fitness, and population selection
+
 
 Feb. 5
 - [ ] Future Expansions
