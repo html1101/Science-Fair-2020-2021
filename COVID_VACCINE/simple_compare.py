@@ -104,6 +104,17 @@ class SequenceComp:
         print(F"Codon differences:\n\t{codonD}")
         print(
             F"\tCodon: {round((1-(codonD/(len(self.seq_1)/3)))*100)}% similarity")
+    def graph_nucleotides(
+        self,
+        frame=10, # Frame to measure nucleotides
+    ):
+        x, y = [], []
+        for i in range(0, len(self.seq_1), frame):
+            # Iterate through and measure nucleotide differences
+            x.append(i)
+            arr = [self.seq_1[ii] for ii in range(i, i+frame)]
+            y.append(len(list(filter(lambda x: x == 1, arr))))
+        return [x, y]
     def change_seq(
             self,
             name, # Name: either seq_1 or seq_2
