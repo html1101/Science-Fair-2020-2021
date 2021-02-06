@@ -33,8 +33,10 @@ Protein differences:
 Codon differences:
         1068
         Codon: 16% similarity
+GC Differences:
+        4.4% difference
 
-Version 2:
+Version 2(window of size 10):
 Nucleotide differences:
 	554
 	Nucleotide: 86% similarity
@@ -44,3 +46,12 @@ Protein differences:
 Codon differences:
 	475
 	Codon: 63% similarity
+GC Differences
+        4.2% difference
+
+Window of size 12:
+        4.9% difference
+Window of size 8:
+        3.7% difference but more codon diff
+Window of size 9:
+        2.2% difference

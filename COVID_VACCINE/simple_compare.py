@@ -75,24 +75,26 @@ class SequenceComp:
 
     def print_compare(
             self,
-            cod_to_prot): # Codon to protein dictionary.
+            cod_to_prot,
+            printFull=True): # Codon to protein dictionary and whether to include full output
         resultsN, diffN = self.rna_compare()
         codP, codA, resultsP, diffP = self.protein_compare(cod_to_prot)
         codonC, codonD = self.codon_compare()
-        for i in range(0, len(self.seq_1), 50):
-            # Print out proteins for seq 1
-            print(codP[i:i+50])
-            # Print out sequence 1
-            print(self.seq_1[i:i+50])
-            # Print out nucleotide differences
-            print(resultsN[i:i+50])
-            # Print out sequence 2
-            print(self.seq_2[i:i+50])
+        if printFull:
+            for i in range(0, len(self.seq_1), 50):
+                # Print out proteins for seq 1
+                print(codP[i:i+50])
+                # Print out sequence 1
+                print(self.seq_1[i:i+50])
+                # Print out nucleotide differences
+                print(resultsN[i:i+50])
+                # Print out sequence 2
+                print(self.seq_2[i:i+50])
 
-            # Print out proteins for seq 2
-            print(codA[i:i+50])
-            # Print out differences in proteins
-            print(resultsP[i:i+50], end="\n\n\n")
+                # Print out proteins for seq 2
+                print(codA[i:i+50])
+                # Print out differences in proteins
+                print(resultsP[i:i+50], end="\n\n\n")
         print(F"Nucleotide differences:\n\t{diffN}")
         print(
             F"\tNucleotide: {round((1-diffN/len(self.seq_1))*100)}% similarity")
