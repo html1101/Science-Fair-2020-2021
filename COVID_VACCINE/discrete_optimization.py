@@ -15,7 +15,7 @@ import time
 # plt.ion()
 # Directory for debugging
 dir = "/Users/sarah/Desktop/Science Fair 2020-2021/"
-
+pathI = "discrete_ver3_var0.3_FreqAddAlpha0.8" # Version name
 # Start time
 start = time.time()
 
@@ -112,7 +112,7 @@ class OptimizeSeq:
     # encoding)
     def __init__(self, seq):
         self.seq = list(seq)
-        self.var = 0.15
+        self.var = 0.3
     
     # Change self.seq at pos x to val
     def change(self, x, val):
@@ -145,16 +145,16 @@ class OptimizeSeq:
     """
     Calculates the fitness of the sequence by the following:
     - GC content - Inputting the actual GC content, finds the GC by MSE
-    - Frequency - How frequent the particular codon is in the homan body.
+    - Frequency - How frequent the particular codon is in the human body.
     - Do weighted addition with alpha.
     """
-    def fitness(self, alpha=0.8, expectedGC=0.57):
+    def fitness(self, expectedGC=0.57):
         # Find diff of expectedGC from gc content
         delta_gcFit = (expectedGC - self.gc_content())
         # Square and divide by variability**2
         prob_gcFit = math.exp(-delta_gcFit**2 / (self.var**2))
         prob_frequencyFit = self.codon_freq()
-        return alpha*prob_gcFit * (1 - alpha)*prob_frequencyFit
+        return prob_gcFit * prob_frequencyFit
 
     # Compare nucleotide and codon % differences to the actual vaccine
     def compare(self, vaccine=Vaccine):
@@ -162,12 +162,12 @@ class OptimizeSeq:
         codon_count = 0
         for i in range(0, len(self.seq), 3):
             # Iterate through codons and compare codons
-            if not "".join(self.seq[i:i+3]) == vaccine[i:i+3]:
+            if "".join(self.seq[i:i+3]) == vaccine[i:i+3]:
                 codon_count += 1
             # Iterate through nucleotides within the codon(because we're
             # doing this in o(n) time).
             for ii in range(i, i+3):
-                if not self.seq[ii] == vaccine[ii]:
+                if self.seq[ii] == vaccine[ii]:
                     # Different nucleotides
                     nucleotide_count += 1
         return nucleotide_count / len(vaccine), codon_count / (len(vaccine)/3)
@@ -185,8 +185,8 @@ class OptimizeSeq:
         print(F"Codon Freq: {round(codonf*10000)/100}%")
         if vacComp:
             comp_nucleo, comp_codon = self.compare() # Compare to vaccine
-            print(F"Nucleotide diff: {round(comp_nucleo*1000)/10}% different")
-            print(F"Codon diff: {round(comp_codon*100000)/1000}% different")
+            print(F"Nucleotides: {round(comp_nucleo*1000)/10}% similar")
+            print(F"Codons: {round(comp_codon*100000)/1000}% similar")
 
         return fit, gc, codonf, comp_nucleo, comp_codon
 
@@ -222,7 +222,7 @@ class OptimizeSeq:
     - Make the change with the lowest fitness and repeat.
     - Stores values in file path
     """
-    def discrete_descent(self, print_output = False, filePath = dir + "COVID_VACCINE/stochas.fasta"):
+    def discrete_descent(self, print_output = False, filePath = dir + "COVID_VACCINE/stochas.fasta", graphPath=dir + "COVID_VACCINE/discrete.csv"):
         best_solution = [0, 0, 0] # [fitness, pos, change to]
         past_fit = float("inf") # To find when the fitness reaches a local minima
         current_iters = 0
@@ -248,7 +248,7 @@ class OptimizeSeq:
                         if best_solution[1] in convex_find and not possibleCodon == originalCodon:
                             is_convex = False
                         elif is_convex:
-                            is_convex.append(best_solution[1])
+                            convex_find.append(best_solution[1])
                         best_solution = [this_fitness, int(i), possibleCodon]
                 # Change back to original codon
                 self.change(i, originalCodon)
@@ -257,8 +257,8 @@ class OptimizeSeq:
                 print(F"\nIter #{current_iters} Optimized: {abs(best_solution[0] - past_fit)}")
                 print("----------------------------")
                 print(F"Change at pos {best_solution[1]} from {''.join(self.seq[best_solution[1]:best_solution[1]+3])} to {best_solution[2]}")
-                print(F"Solution appears {is_convex ? 'convex' : 'not convex'}.")
-                self.graphInfo()
+                print(F"Solution appears {'convex' if is_convex else 'not convex'}.")
+                self.graphInfo(graphPath)
                 # Write to file
                 w = open(filePath, "w+")
                 w.write(F">discrete gradient descent vaccine\n")
@@ -293,7 +293,7 @@ optimize = OptimizeSeq(Spike)
 print(len(Spike))
 print(optimize.print_info())
 # Run optimization
-optimize.discrete_descent(True, dir + 'COVID_VACCINE/discrete_ver2.fasta')
+optimize.discrete_descent(True, F'{dir}COVID_VACCINE/{pathI}.fasta', F"{dir}COVID_VACCINE/{pathI}.csv")
 print(time.time() - start)
 """
 
@@ -322,22 +322,3 @@ import numpy as np
 
 actual_vac = OptimizeSeq(Vaccine)
 actual_vac.print_info()
-
-# Start from this point, then step forwards by step_size.
-
-"""
-derivative = (d(x+h)+d(x))/h
-h = step size
-"""
-# Find fitness
-
-# Create graph comparing alpha values and their fitness
-"""
-alphaX = np.arange(-0, 1, 0.1)
-fitnessY = []
-for i in alphaX:
-    fitnessY.append(actual_vac.fitness(alpha=i))
-
-plt.plot(alphaX, fitnessY)
-plt.show()
-"""
