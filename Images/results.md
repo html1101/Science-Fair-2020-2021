@@ -55,3 +55,14 @@ Window of size 8:
         3.7% difference but more codon diff
 Window of size 9:
         2.2% difference
+
+
+
+Discrete optimization - Version 2
+Final Fitness: -0.005885
+GC Content: 57.01%
+Codon Freq: 14.95%
+Nucleotide diff: 11.8% different
+Codon diff: 28.728% different
+
+Discrete optimization - Version 3

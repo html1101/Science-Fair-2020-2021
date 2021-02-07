@@ -1,6 +1,28 @@
-<h1>mRNA Sequence Design Using Genetic Optimization</h1>
+<h1>mRNA Sequence Design Using Optimization Techniques</h1>
 <sub>Science Fair 2020-2021</sub>
 <hr>
+Current methods:
+- Codon mapping - Mapping the codon values to a lookup table. Simple, quick, and
+high nucleotide and codon % matches.
+- Discrete optimization version 0:
+  - Iterates through and for each codon finds the best optimized codon.
+  - Problems with high GC content at beginning and cutting down at end.
+  - Slow, relatively good results but not state-of-the-art.
+- Discrete optimization version 1:
+  - Iterates through, measures fitness within a specific frame(size 12), and for each codon finds best optimized codon.
+  - GC content can get extremely close(within 0.1%) to actual vaccine, at cost of major nucleotide and codon differences.
+  - Fixes GC problems slightly(although sometimes avg GC content within a specific area might dip, this fixes it so it's not indicative of real vaccine)
+- Discrete optimization version 2:
+  - Iterates through, measures fitness for entire sequence and finds best codon to change.
+  - Very good results - High nucleotide and codon % matches
+  - Also high GC % and codon frequency %
+  - Much slower than versions 0 and 1
+- Discrete optimization version 3:
+  - Same as version 2, but optimizes fitness function
+  - Converges slightly faster
+  - Fitness function normalized and doesn't require alpha value(which is a constant that isn't guaranteed to be the same across different viruses)
+
+
 
 SCHEDULE
 
@@ -38,12 +60,12 @@ Feb. 20: Presentation
 - [x] Research Locations
 - [x] External Signatures
 - [x] Project Approval Method
-- [ ] Teacher Approval
-- [ ] IRB Approval
-- [ ] SRC Approval
-- [ ] Project end date
-- [ ] 1C Signature
-- [ ] SRC Post-approval
+- [x] Teacher Approval
+- [x] IRB Approval
+- [x] SRC Approval
+- [x] Project end date
+- [x] 1C Signature
+- [x] SRC Post-approval
 - [ ] Project Summary
 - [ ] Abstract
 
@@ -88,7 +110,6 @@ Feb. 4
 - [ ] Introduction
 - [ ] Purpose
 - [ ] Background
-- [ ] GA - Create population, measure fitness, and population selection
 
 
 Feb. 5
@@ -96,11 +117,11 @@ Feb. 5
 - [ ] Practical Applications
 - [ ] Implement self-replicating vaccine
 - [ ] Apply GA to 3 viruses
-- [ ] If at a good place, talk to Mr. Nydegger
 
 Feb. 6
-- [ ] Wild card day: Polishing, fixing bugs, optimizing GA
 - [ ] Connect self-replicating vaccine to lookup table, find corresponding structural proteins
+- [ ] Apply to 3 viruses
+- [ ] Calculate when to finish
 - [ ] Rendering:
   - [ ] Antigen shading
   - [ ] Run vaccine through AlphaFold + render w/ GFuzz

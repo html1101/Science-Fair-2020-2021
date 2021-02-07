@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\COVID_VACCINE"
+    "\\COVID_VACCINE",
+    "\\Images"
   ],
-  "SelectedNode": "\\COVID_VACCINE\\stochastic_optimization.py",
+  "SelectedNode": "\\COVID_VACCINE\\discrete_optimization.py",
   "PreviewInSolutionExplorer": false
 }
