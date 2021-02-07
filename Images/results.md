@@ -66,3 +66,10 @@ Nucleotide diff: 11.8% different
 Codon diff: 28.728% different
 
 Discrete optimization - Version 3
+Change at pos 2922 from TCT to TCT
+Final Fitness: 0.15171
+GC Content: 57.67%
+Codon Freq: 15.19%
+Nucleotide diff: 12.4% different
+Codon diff: 25.432% different
+

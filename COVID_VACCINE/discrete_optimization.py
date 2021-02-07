@@ -10,10 +10,21 @@ import json
 import matplotlib
 import matplotlib.pyplot as plt
 import os, math
+import time
 
 # plt.ion()
 # Directory for debugging
 dir = "/Users/sarah/Desktop/Science Fair 2020-2021/"
+
+# Start time
+start = time.time()
+
+# Function to convert to hours minutes seconds
+def convert(seconds): 
+    min, sec = divmod(seconds, 60) 
+    hour, min = divmod(min, 60) 
+    return "%d:%02d:%02d" % (hour, min, sec) 
+
 
 # Path to codon => amino acid lookup table
 PATH_codon_to_protein = dir + "COVID_VACCINE/codon_to_protein.json"
@@ -101,7 +112,7 @@ class OptimizeSeq:
     # encoding)
     def __init__(self, seq):
         self.seq = list(seq)
-        self.var = 0.2
+        self.var = 0.15
     
     # Change self.seq at pos x to val
     def change(self, x, val):
@@ -137,13 +148,13 @@ class OptimizeSeq:
     - Frequency - How frequent the particular codon is in the homan body.
     - Do weighted addition with alpha.
     """
-    def fitness(self, expectedGC=0.57):
+    def fitness(self, alpha=0.8, expectedGC=0.57):
         # Find diff of expectedGC from gc content
         delta_gcFit = (expectedGC - self.gc_content())
         # Square and divide by variability**2
         prob_gcFit = math.exp(-delta_gcFit**2 / (self.var**2))
         prob_frequencyFit = self.codon_freq()
-        return prob_gcFit * prob_frequencyFit
+        return alpha*prob_gcFit * (1 - alpha)*prob_frequencyFit
 
     # Compare nucleotide and codon % differences to the actual vaccine
     def compare(self, vaccine=Vaccine):
@@ -215,6 +226,11 @@ class OptimizeSeq:
         best_solution = [0, 0, 0] # [fitness, pos, change to]
         past_fit = float("inf") # To find when the fitness reaches a local minima
         current_iters = 0
+        # To find whether the function is convex,
+        # We will push in all the positions being changed.
+        # If a position is changed more than once, it's not convex
+        convex_find = []
+        is_convex = True
         while not best_solution[0] == past_fit:
             past_fit = best_solution[0]
             for i in range(0, len(self.seq), 3):
@@ -229,6 +245,10 @@ class OptimizeSeq:
                     this_fitness = self.fitness()
                     # If it does well, store it.
                     if this_fitness > best_solution[0]:
+                        if best_solution[1] in convex_find and not possibleCodon == originalCodon:
+                            is_convex = False
+                        elif is_convex:
+                            is_convex.append(best_solution[1])
                         best_solution = [this_fitness, int(i), possibleCodon]
                 # Change back to original codon
                 self.change(i, originalCodon)
@@ -237,6 +257,7 @@ class OptimizeSeq:
                 print(F"\nIter #{current_iters} Optimized: {abs(best_solution[0] - past_fit)}")
                 print("----------------------------")
                 print(F"Change at pos {best_solution[1]} from {''.join(self.seq[best_solution[1]:best_solution[1]+3])} to {best_solution[2]}")
+                print(F"Solution appears {is_convex ? 'convex' : 'not convex'}.")
                 self.graphInfo()
                 # Write to file
                 w = open(filePath, "w+")
@@ -273,7 +294,7 @@ print(len(Spike))
 print(optimize.print_info())
 # Run optimization
 optimize.discrete_descent(True, dir + 'COVID_VACCINE/discrete_ver2.fasta')
-
+print(time.time() - start)
 """
 
 # Run OptimizeSeq on Spike
