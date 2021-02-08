@@ -127,6 +127,18 @@ Wrote to /Users/sarah/Desktop/Science Fair 2020-2021/COVID_VACCINE/discrete_ver3
 Wrote to /Users/sarah/Desktop/Science Fair 2020-2021/COVID_VACCINE/discrete_ver3_var0.3_FreqAddAlpha0.8.fasta
 5208.715737104416 seconds
 
+Iter #1009 Optimized: 0.0
+----------------------------
+Change at pos 1662 from AGC to AGC
+Solution appears not convex.
+Final Fitness: 0.152201
+GC Content: 59.63%
+Codon Freq: 15.29%
+Nucleotides: 90.7% similar
+Codons: 78.1% similar
+Wrote to /Users/sarah/Desktop/Science Fair 2020-2021/COVID_VACCINE/discrete_ver3_var0.4_FreqMult.csv file
+Wrote to /Users/sarah/Desktop/Science Fair 2020-2021/COVID_VACCINE/discrete_ver3_var0.4_FreqMult.fasta
+5527.557608604431
 
 Vaccine
 -------------------

@@ -15,7 +15,7 @@ import time
 # plt.ion()
 # Directory for debugging
 dir = "/Users/sarah/Desktop/Science Fair 2020-2021/"
-pathI = "discrete_ver3_var0.3_FreqAddAlpha0.8" # Version name
+pathI = "discrete_ver3_var0.4_FreqMult" # Version name
 # Start time
 start = time.time()
 
@@ -112,7 +112,7 @@ class OptimizeSeq:
     # encoding)
     def __init__(self, seq):
         self.seq = list(seq)
-        self.var = 0.3
+        self.var = 0.4
     
     # Change self.seq at pos x to val
     def change(self, x, val):
