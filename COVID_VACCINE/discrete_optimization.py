@@ -15,7 +15,7 @@ import time
 # plt.ion()
 # Directory for debugging
 dir = "/Users/sarah/Desktop/Science Fair 2020-2021/"
-pathI = "discrete_ver3_var0.4_FreqMult" # Version name
+pathI = "discrete_ver3_var0.35_FreqMult" # Version name
 # Start time
 start = time.time()
 
@@ -70,6 +70,7 @@ codonFreq = {}
 for i in codonFreqArr:
     line = i.split(",")
     # line[0] uses Us instead of Ts; because we're using RNA, we need to replace them.
+    # Because all other .fasta files use T, we use T instead, at least in processing
     line[0] = line[0].replace("U", "T")
     codonFreq[line[0]] = float(line[2])
 
@@ -110,9 +111,9 @@ print_info(include header) - Print Fitness, GC content, amino acid frequency cal
 class OptimizeSeq:
     # Initializes and inputs a sequence(the section of the virus we are
     # encoding)
-    def __init__(self, seq):
+    def __init__(self, seq, var):
         self.seq = list(seq)
-        self.var = 0.4
+        self.var = 0.35
     
     # Change self.seq at pos x to val
     def change(self, x, val):

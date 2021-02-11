@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\COVID_VACCINE"
+    "\\COVID_VACCINE",
+    "\\Images"
   ],
-  "SelectedNode": "\\COVID_VACCINE\\discrete_optimization.py",
+  "SelectedNode": "\\Images\\codon_map_overcompensating.png",
   "PreviewInSolutionExplorer": false
 }
