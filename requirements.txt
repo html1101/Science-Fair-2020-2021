@@ -1,0 +1,4 @@
+# List of libraries to install beforehand.
+Bio
+absl-py
+matplotlib
